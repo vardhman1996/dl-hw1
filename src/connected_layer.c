@@ -109,3 +109,4 @@ layer make_connected_layer(int inputs, int outputs, ACTIVATION activation)
     l.update   = update_connected_layer;
     return l;
 }
+

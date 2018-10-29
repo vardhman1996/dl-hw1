@@ -65,6 +65,8 @@ void backward_bias(matrix delta, matrix db);
 void activate_matrix(matrix m, ACTIVATION a);
 void gradient_matrix(matrix m, ACTIVATION a, matrix d);
 
+matrix im2col(image im, int size, int stride);
+
 #ifdef __cplusplus
 }
 #endif
