@@ -355,16 +355,185 @@ void test_col2im_3i_1c_3f_2s() {
     printf("test_col2im_3i_1c_3f_2s passed\n");
 }
 
+void test_forward_maxpool_layer_3i_1c_1b_3f_1s() {
+    size_t i;
+    int im_h = 3;
+    int im_w = 3;
+    int num_ch = 1;
+    int f_size = 3;
+    int stride = 1;
+    int b = 1;
+
+    int outw = (im_w-1)/stride + 1;
+    int outh = (im_h-1)/stride + 1;
+
+    float in_data[] = {
+        -1, -2, -3,  -4, -6, -7,  -8, -9, -5
+    };
+    float out_data[] = {
+        -1, -1, -2,  -1, -1, -2,  -4, -4, -5
+    };
+    matrix in = make_matrix(b, outw * outh);
+    in.data = in_data;
+    layer max_pool_layer = make_maxpool_layer(im_w, im_h, num_ch, f_size, stride);
+    matrix out = forward_maxpool_layer(max_pool_layer, in);
+    
+    for (i = 0; i < num_ch * out.rows * out.cols; i++) {
+        assert(abs(out.data[i] - out_data[i]) < 0.0001);
+    }
+    printf("test_forward_maxpool_layer_3i_1c_1b_3f_1s passed\n");
+}
+
+void test_forward_maxpool_layer_3i_1c_1b_3f_2s() {
+    size_t i;
+    int im_h = 3;
+    int im_w = 3;
+    int num_ch = 1;
+    int f_size = 3;
+    int stride = 2;
+    int b = 1;
+
+    int outw = (im_w-1)/stride + 1;
+    int outh = (im_h-1)/stride + 1;
+
+    float in_data[] = {
+        -1, -2, -3,  -4, -6, -7,  -8, -9, -5
+    };
+    float out_data[] = {
+        -1, -2,  -4, -5
+    };
+    matrix in = make_matrix(b, outw * outh);
+    in.data = in_data;
+    layer max_pool_layer = make_maxpool_layer(im_w, im_h, num_ch, f_size, stride);
+    matrix out = forward_maxpool_layer(max_pool_layer, in);
+    
+    // print_matrix(out);
+    for (i = 0; i < num_ch * out.rows * out.cols; i++) {
+        assert(abs(out.data[i] - out_data[i]) < 0.0001);
+    }
+    printf("test_forward_maxpool_layer_3i_1c_1b_3f_2s passed\n");
+}
+
+void test_forward_maxpool_layer_3i_2c_1b_3f_2s() {
+    size_t i;
+    int im_h = 3;
+    int im_w = 3;
+    int num_ch = 2;
+    int f_size = 3;
+    int stride = 2;
+    int b = 1;
+
+    int outw = (im_w-1)/stride + 1;
+    int outh = (im_h-1)/stride + 1;
+
+    float in_data[] = {
+        -1, -2, -3,  -4, -6, -7,  -8, -9, -5,    1, 2, 3,  4, 5, 6,  7, 8, 9
+    };
+    float out_data[] = {
+        -1, -2,  -4, -5,     5, 6,   8, 9
+    };
+    matrix in = make_matrix(b, outw * outh);
+    in.data = in_data;
+    layer max_pool_layer = make_maxpool_layer(im_w, im_h, num_ch, f_size, stride);
+    matrix out = forward_maxpool_layer(max_pool_layer, in);
+    
+    for (i = 0; i < out.rows * out.cols; i++) {
+        if (abs(out.data[i] - out_data[i]) > 0.0001) {
+            print_matrix(out);
+            printf("Expected %f, got %f. i: %ld\n", out_data[i], out.data[i], i);
+            exit(1);
+        }
+    }
+    printf("test_forward_maxpool_layer_3i_2c_1b_3f_2s passed\n");
+}
+
+void test_forward_maxpool_layer_3i_2c_1b_2f_1s() {
+    size_t i;
+    int im_h = 3;
+    int im_w = 3;
+    int num_ch = 2;
+    int f_size = 2;
+    int stride = 1;
+    int b = 1;
+
+    int outw = (im_w-1)/stride + 1;
+    int outh = (im_h-1)/stride + 1;
+
+    float in_data[] = {
+        -1, -2, -3,  -4, -6, -7,  -8, -9, -5,    1, 2, 3,  4, 5, 6,  7, 8, 9
+    };
+    float out_data[] = {
+        -1, -2, -3,  -4, -5, -5,   -8, -5, -5,    5, 6, 6,  8, 9, 9,   8, 9, 9
+    };
+    matrix in = make_matrix(b, outw * outh);
+    in.data = in_data;
+    layer max_pool_layer = make_maxpool_layer(im_w, im_h, num_ch, f_size, stride);
+    matrix out = forward_maxpool_layer(max_pool_layer, in);
+    
+    for (i = 0; i < out.rows * out.cols; i++) {
+        if (abs(out.data[i] - out_data[i]) > 0.0001) {
+            print_matrix(out);
+            printf("Expected %f, got %f. i: %ld\n", out_data[i], out.data[i], i);
+            exit(1);
+        }
+    }
+    printf("test_forward_maxpool_layer_3i_2c_1b_2f_1s passed\n");
+}
+
+void test_forward_maxpool_layer_3i_2c_2b_2f_1s() {
+    size_t i;
+    int im_h = 3;
+    int im_w = 3;
+    int num_ch = 2;
+    int f_size = 2;
+    int stride = 1;
+    int b = 1;
+
+    int outw = (im_w-1)/stride + 1;
+    int outh = (im_h-1)/stride + 1;
+
+    float in_data[] = {
+        -1, -2, -3,  -4, -6, -7,  -8, -9, -5,    1, 2, 3,  4, 5, 6,  7, 8, 9,
+        1, 2, 3,  4, 5, 6,  7, 8, 9,    -1, -2, -3,  -4, -6, -7,  -8, -9, -5
+    };
+    float out_data[] = {
+        -1, -2, -3,  -4, -5, -5,   -8, -5, -5,    5, 6, 6,  8, 9, 9,   8, 9, 9,
+        5, 6, 6,  8, 9, 9,   8, 9, 9,    -1, -2, -3,  -4, -5, -5,   -8, -5, -5
+    };
+    matrix in = make_matrix(b, outw * outh);
+    in.data = in_data;
+    layer max_pool_layer = make_maxpool_layer(im_w, im_h, num_ch, f_size, stride);
+    matrix out = forward_maxpool_layer(max_pool_layer, in);
+    
+    for (i = 0; i < out.rows * out.cols; i++) {
+        if (abs(out.data[i] - out_data[i]) > 0.0001) {
+            print_matrix(out);
+            printf("Expected %f, got %f. i: %ld\n", out_data[i], out.data[i], i);
+            return;
+        }
+    }
+    printf("test_forward_maxpool_layer_3i_2c_2b_2f_1s passed\n");
+}
+
 void test_col2im() {
     test_col2im_3i_1c_2f_1s();
     test_col2im_3i_1c_3f_1s();
     test_col2im_3i_1c_3f_2s();
 }
 
+void test_forward_maxpool() {
+    test_forward_maxpool_layer_3i_1c_1b_3f_1s();
+    test_forward_maxpool_layer_3i_1c_1b_3f_2s();
+    test_forward_maxpool_layer_3i_2c_1b_3f_2s();
+    test_forward_maxpool_layer_3i_2c_1b_2f_1s();
+    test_forward_maxpool_layer_3i_2c_2b_2f_1s();
+}
+
 void run_tests()
 {
+    test_forward_maxpool();
     // test_matrix_speed();
-    test_im2col();
-    test_col2im();
+    // test_im2col();
+    // test_col2im();
     //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }

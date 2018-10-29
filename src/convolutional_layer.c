@@ -52,7 +52,7 @@ matrix im2col(image im, int size, int stride)
 
     int start = (size - 1) / 2;
     for(int channel = 0; channel < im.c; channel++) {
-        float* chanData = &im.data[channel * im.w * im.h]; //get_channel(im, channel);
+        float* chanData = &im.data[channel * im.w * im.h];
         float* colChanData = &col.data[channel * size * size * cols];
         for(int rowSteps = 0; rowSteps < im.h; rowSteps += stride) {
             for(int colSteps = 0; colSteps < im.w; colSteps += stride) {

@@ -66,6 +66,7 @@ void activate_matrix(matrix m, ACTIVATION a);
 void gradient_matrix(matrix m, ACTIVATION a, matrix d);
 
 matrix im2col(image im, int size, int stride);
+matrix forward_maxpool_layer(layer l, matrix in);
 
 #ifdef __cplusplus
 }
