@@ -81,7 +81,6 @@ void backward_maxpool_layer(layer l, matrix prev_delta)
         float* prevDeltaImage = &prev_delta.data[img_i * prev_delta.cols];
         float* deltaImage = &delta.data[img_i * delta.cols];
         for(int c = 0; c < l.channels; c++) {
-            // printf("Channel: %d --------------------------- \n", c);
             float* inChanData = &inImage[c * l.width * l.height];
             float* prevDeltaChanData = &prevDeltaImage[c * l.width * l.height];
             float* deltaChanData = &deltaImage[c * outw * outh];
@@ -99,7 +98,6 @@ void backward_maxpool_layer(layer l, matrix prev_delta)
                             if (offset_i < 0 || offset_j < 0 || offset_i >= l.height || offset_j >= l.width){
                                 continue;
                             } else {
-                                // printf("i %d, j %d, index: %d, val: %f\n", offset_i, offset_j, image_index, inChanData[image_index]);
                                 if (inChanData[image_index] > max) {
                                     max = inChanData[image_index];
                                     max_idx_i = offset_i;
@@ -109,7 +107,6 @@ void backward_maxpool_layer(layer l, matrix prev_delta)
                         }
                     }
                     int outIdx = (rowSteps / l.stride) * outw + (colSteps / l.stride);
-                    // printf("Setting at index: %d max: %f\n", outIdx, max);
                     prevDeltaChanData[max_idx_i * l.width + max_idx_j] += deltaChanData[outIdx];
                 }
             }

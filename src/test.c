@@ -237,123 +237,123 @@ void test_im2col() {
     // test_large();
 }
 
-void test_col2im_3i_1c_2f_1s() {
-    size_t i;
-    int im_h = 3;
-    int im_w = 3;
-    int num_ch = 1;
-    int f_size = 2;
-    int stride = 1;
+// void test_col2im_3i_1c_2f_1s() {
+//     size_t i;
+//     int im_h = 3;
+//     int im_w = 3;
+//     int num_ch = 1;
+//     int f_size = 2;
+//     int stride = 1;
 
-    int outw = (im_w-1)/stride + 1;
-    int outh = (im_h-1)/stride + 1;
-
-
-    float col_data[2 * 2 * 3 * 3] = {
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        2, 3, 0, 5, 6, 0, 8, 9, 0,
-        4, 5, 6, 7, 8, 9, 0, 0, 0,
-        5, 6, 0, 8, 9, 0, 0, 0, 0
-    };
-
-    float im_data[3 * 3] = {
-        1, 4, 6,
-        8, 20, 24,
-        14, 32, 36
-    };
-
-    image im = make_image(im_w, im_h, num_ch);
-    matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
-    col.data = col_data;
-    col2im(col, f_size, stride, im);
-
-    for (i = 0; i < im_h * im_w; i++) {
-        assert(abs(im.data[i] - im_data[i]) < 0.0001);
-    }
-    printf("test_col2im_3i_1c_2f_1s passed\n");
-}
-
-void test_col2im_3i_1c_3f_1s() {
-    size_t i;
-    int im_h = 3;
-    int im_w = 3;
-    int num_ch = 1;
-    int f_size = 3;
-    int stride = 1;
-
-    int outw = (im_w-1)/stride + 1;
-    int outh = (im_h-1)/stride + 1;
+//     int outw = (im_w-1)/stride + 1;
+//     int outh = (im_h-1)/stride + 1;
 
 
-    float col_data[3 * 3 * 3 * 3] = {
-        0, 0, 0, 0, 1, 2, 0, 4, 5,
-        0, 0, 0, 1, 2, 3, 4, 5, 6,
-        0, 0, 0, 2, 3, 0, 5, 6, 0,
-        0, 1, 2, 0, 4, 5, 0, 7, 8,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        2, 3, 0, 5, 6, 0, 8, 9, 0,
-        0, 4, 5, 0, 7, 8, 0, 0, 0,
-        4, 5, 6, 7, 8, 9, 0, 0, 0,
-        5, 6, 0, 8, 9, 0, 0, 0, 0
-    };
+//     float col_data[2 * 2 * 3 * 3] = {
+//         1, 2, 3, 4, 5, 6, 7, 8, 9,
+//         2, 3, 0, 5, 6, 0, 8, 9, 0,
+//         4, 5, 6, 7, 8, 9, 0, 0, 0,
+//         5, 6, 0, 8, 9, 0, 0, 0, 0
+//     };
 
-    float im_data[3 * 3] = {
-        4,  12,  12,
-        24,  45,  36,
-        28,  48,  36
-    };
+//     float im_data[3 * 3] = {
+//         1, 4, 6,
+//         8, 20, 24,
+//         14, 32, 36
+//     };
 
-    image im = make_image(im_w, im_h, num_ch);
-    matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
-    col.data = col_data;
-    col2im(col, f_size, stride, im);
+//     image im = make_image(im_w, im_h, num_ch);
+//     matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
+//     col.data = col_data;
+//     col2im(col, f_size, stride, im);
 
-    for (i = 0; i < im_h * im_w; i++) {
-        assert(abs(im.data[i] - im_data[i]) < 0.0001);
-    }
-    printf("test_col2im_3i_1c_3f_1s passed\n");
-}
+//     for (i = 0; i < im_h * im_w; i++) {
+//         assert(abs(im.data[i] - im_data[i]) < 0.0001);
+//     }
+//     printf("test_col2im_3i_1c_2f_1s passed\n");
+// }
 
-void test_col2im_3i_1c_3f_2s() {
-    size_t i;
-    int im_h = 3;
-    int im_w = 3;
-    int num_ch = 1;
-    int f_size = 3;
-    int stride = 2;
+// void test_col2im_3i_1c_3f_1s() {
+//     size_t i;
+//     int im_h = 3;
+//     int im_w = 3;
+//     int num_ch = 1;
+//     int f_size = 3;
+//     int stride = 1;
 
-    int outw = (im_w-1)/stride + 1;
-    int outh = (im_h-1)/stride + 1;
+//     int outw = (im_w-1)/stride + 1;
+//     int outh = (im_h-1)/stride + 1;
 
 
-    float col_data[3 * 3 * 2 * 2] = {
-        0, 0, 0, 5,
-        0, 0, 4, 6,
-        0, 0, 5, 0,
-        0, 2, 0, 8,
-        1, 3, 7, 9,
-        2, 0, 8, 0,
-        0, 5, 0, 0,
-        4, 6, 0, 0,
-        5, 0, 0, 0
-    };
+//     float col_data[3 * 3 * 3 * 3] = {
+//         0, 0, 0, 0, 1, 2, 0, 4, 5,
+//         0, 0, 0, 1, 2, 3, 4, 5, 6,
+//         0, 0, 0, 2, 3, 0, 5, 6, 0,
+//         0, 1, 2, 0, 4, 5, 0, 7, 8,
+//         1, 2, 3, 4, 5, 6, 7, 8, 9,
+//         2, 3, 0, 5, 6, 0, 8, 9, 0,
+//         0, 4, 5, 0, 7, 8, 0, 0, 0,
+//         4, 5, 6, 7, 8, 9, 0, 0, 0,
+//         5, 6, 0, 8, 9, 0, 0, 0, 0
+//     };
 
-    float im_data[3 * 3] = {
-        1,  4,  3,
-        8,  20,  12,
-        7,  16,  9
-    };
+//     float im_data[3 * 3] = {
+//         4,  12,  12,
+//         24,  45,  36,
+//         28,  48,  36
+//     };
 
-    image im = make_image(im_w, im_h, num_ch);
-    matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
-    col.data = col_data;
-    col2im(col, f_size, stride, im);
+//     image im = make_image(im_w, im_h, num_ch);
+//     matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
+//     col.data = col_data;
+//     col2im(col, f_size, stride, im);
 
-    for (i = 0; i < im_h * im_w; i++) {
-        assert(abs(im.data[i] - im_data[i]) < 0.0001);
-    }
-    printf("test_col2im_3i_1c_3f_2s passed\n");
-}
+//     for (i = 0; i < im_h * im_w; i++) {
+//         assert(abs(im.data[i] - im_data[i]) < 0.0001);
+//     }
+//     printf("test_col2im_3i_1c_3f_1s passed\n");
+// }
+
+// void test_col2im_3i_1c_3f_2s() {
+//     size_t i;
+//     int im_h = 3;
+//     int im_w = 3;
+//     int num_ch = 1;
+//     int f_size = 3;
+//     int stride = 2;
+
+//     int outw = (im_w-1)/stride + 1;
+//     int outh = (im_h-1)/stride + 1;
+
+
+//     float col_data[3 * 3 * 2 * 2] = {
+//         0, 0, 0, 5,
+//         0, 0, 4, 6,
+//         0, 0, 5, 0,
+//         0, 2, 0, 8,
+//         1, 3, 7, 9,
+//         2, 0, 8, 0,
+//         0, 5, 0, 0,
+//         4, 6, 0, 0,
+//         5, 0, 0, 0
+//     };
+
+//     float im_data[3 * 3] = {
+//         1,  4,  3,
+//         8,  20,  12,
+//         7,  16,  9
+//     };
+
+//     image im = make_image(im_w, im_h, num_ch);
+//     matrix col = make_matrix(num_ch * f_size * f_size, outh * outw);
+//     col.data = col_data;
+//     col2im(col, f_size, stride, im);
+
+//     for (i = 0; i < im_h * im_w; i++) {
+//         assert(abs(im.data[i] - im_data[i]) < 0.0001);
+//     }
+//     printf("test_col2im_3i_1c_3f_2s passed\n");
+// }
 
 void test_forward_maxpool_layer_3i_1c_1b_3f_1s() {
     size_t i;
@@ -515,11 +515,11 @@ void test_forward_maxpool_layer_3i_2c_2b_2f_1s() {
     printf("test_forward_maxpool_layer_3i_2c_2b_2f_1s passed\n");
 }
 
-void test_col2im() {
-    test_col2im_3i_1c_2f_1s();
-    test_col2im_3i_1c_3f_1s();
-    test_col2im_3i_1c_3f_2s();
-}
+// void test_col2im() {
+//     test_col2im_3i_1c_2f_1s();
+//     test_col2im_3i_1c_3f_1s();
+//     test_col2im_3i_1c_3f_2s();
+// }
 
 void test_forward_maxpool() {
     test_forward_maxpool_layer_3i_1c_1b_3f_1s();

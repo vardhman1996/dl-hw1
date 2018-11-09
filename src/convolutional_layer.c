@@ -89,7 +89,7 @@ void col2im(matrix col, int size, int stride, image im)
 {
     int outw = (im.w-1)/stride + 1;
     int outh = (im.h-1)/stride + 1;
-    int rows = im.c*size*size;
+    // int rows = im.c*size*size;
     int cols = outw * outh;
 
     // TODO: 5.2 - add values into image im from the column matrix
@@ -108,7 +108,6 @@ void col2im(matrix col, int size, int stride, image im)
                         int offset_j = j - start + colSteps; 
                         int imageIndex = offset_i * im.w + offset_j;
 
-                        // printf("index: %d  imageIndex: %d i: %d j: %d rowSteps: %d colSteps: %d\n", index, imageIndex, i, j, rowSteps, colSteps);
                         if (offset_i < 0 || offset_j < 0 || offset_i >= im.h || offset_j >= im.w) {
                             continue;
                         } else {

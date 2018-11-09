@@ -48,7 +48,7 @@ rate = .01
 momentum = .9
 decay = .005
 
-m = your_net()
+m = conv_net()
 print("training...")
 train_image_classifier(m, train, batch, iters, rate, momentum, decay)
 print("done")
